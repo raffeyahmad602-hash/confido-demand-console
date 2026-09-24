@@ -1,0 +1,1324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Confido Demand Console</title>
+<meta name="description" content="What I'd ship at Confido in ninety days: The Deduction Index, a six-week multi-channel campaign built from it, and the weekly loop that iterates it. By Raffey Ahmad.">
+<meta name="author" content="Raffey Ahmad">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Confido Demand Console">
+<meta property="og:description" content="What I'd ship at Confido in ninety days: The Deduction Index, a six-week multi-channel campaign built from it, and the weekly loop that iterates it. By Raffey Ahmad.">
+<meta property="og:url" content="https://raffeyahmad602-hash.github.io/confido-demand-console/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Confido Demand Console">
+<meta name="twitter:description" content="What I'd ship at Confido in ninety days: The Deduction Index, a six-week multi-channel campaign built from it, and the weekly loop that iterates it. By Raffey Ahmad.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2350936d'/%3E%3Ccircle cx='16' cy='16' r='7.5' fill='none' stroke='%23faf8f4' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='8.5' r='3' fill='%238ec2a4'/%3E%3C/svg%3E">
+<style>
+  /* Standalone reset — the Artifact host normally injects this; GitHub Pages does not. */
+  :root{ color-scheme:light dark; box-sizing:border-box;
+         padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
+  html{ scroll-padding-top:env(safe-area-inset-top,0px); }
+  body{ margin:0; padding:0; background:#faf8f4; color:#313131; }
+  img{ max-width:100%; }
+  [hidden]:not([hidden=until-found i]){ display:none!important; }
+</style>
+</head>
+<body>
+<style>
+  /* ─────────────────────────────────────────────────────────────────────────
+     Design system read directly off confidotech.com's live CSS and computed
+     styles, then applied here rather than approximated:
+
+       ground          --beige-200 #faf8f4      strokes  --page-strokes #3535350d
+       panel sage      rgb(142,194,164) #8ec2a4  radius 5px, flat, no shadow
+       panel deep      rgb(80,147,109)  #50936d  radius 6px
+       cream           --beige-300 #f7f4ed      card     --fcfbf8 #fcfbf8
+       ink             --charcoal-900 #313131   muted    --charcoal-700 #6c6c6c
+       green           --green-700 #527e65 / --green-500 #64997b / --green-200 #e5f1ea
+       brights         #275ceb  #e62e7b  #f0ad42  #24c5e5  #c75ff4  #e53935
+
+       display   Season Serif, weight 300–400, line-height 1.0, tracking −0.017em
+       body      Geist, weight 400–500, tracking −0.03em
+       label     IBM Plex Mono 500, uppercase, 12.5px, tracking −0.03em,
+                 inside a 1px solid pill at radius 999px — their exact eyebrow
+       button    Lato 700 / 14px, black fill, #faf8f4 text, radius 8px
+
+     Season Serif is licensed from Displaay and can't be served here, so
+     Newsreader stands in at the same light weights. Everything else — Geist,
+     IBM Plex Mono, Lato — is the real thing.
+
+     Structure: claim first, evidence on demand. Every dropdown on this page is
+     closed at rest, and the page still reads as a complete argument that way.
+     ───────────────────────────────────────────────────────────────────────── */
+  :root{
+    --page:#faf8f4; --cream:#f7f4ed; --card:#fcfbf8; --white:#ffffff;
+    --ink:#313131; --ink-strong:#000000; --muted:#6c6c6c; --faint:#9a958c;
+    --stroke:#3535350d; --line:#3131311a; --line-2:#31313126;
+    --sage:#8ec2a4; --deep:#50936d; --green:#527e65; --green-mid:#64997b; --green-soft:#e5f1ea;
+    --blue:#275ceb; --blue-soft:#e7edfe; --pink:#e62e7b; --amber:#f0ad42; --amber-soft:#fdf1de;
+    --cyan:#24c5e5; --red:#e53935; --on-dark:#faf8f4;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --page:#1a1a19; --cream:#232322; --card:#242423; --white:#2b2b29;
+      --ink:#f3f0ea; --ink-strong:#ffffff; --muted:#a8a29a; --faint:#8a847b;
+      --stroke:#f3f0ea0a; --line:#f3f0ea1f; --line-2:#f3f0ea33;
+      --sage:#6fa787; --deep:#3f7a59; --green:#8bbfa1; --green-mid:#76b893; --green-soft:#24382c;
+      --blue:#8ba6ee; --blue-soft:#1e2740; --pink:#f06a9f; --amber:#e9a944; --amber-soft:#352914;
+      --cyan:#5fd4ee; --red:#ef6b66; --on-dark:#12120f;
+    }
+  }
+  :root[data-theme="dark"]{
+    --page:#1a1a19; --cream:#232322; --card:#242423; --white:#2b2b29;
+    --ink:#f3f0ea; --ink-strong:#ffffff; --muted:#a8a29a; --faint:#8a847b;
+    --stroke:#f3f0ea0a; --line:#f3f0ea1f; --line-2:#f3f0ea33;
+    --sage:#6fa787; --deep:#3f7a59; --green:#8bbfa1; --green-mid:#76b893; --green-soft:#24382c;
+    --blue:#8ba6ee; --blue-soft:#1e2740; --pink:#f06a9f; --amber:#e9a944; --amber-soft:#352914;
+    --cyan:#5fd4ee; --red:#ef6b66; --on-dark:#12120f;
+  }
+
+  *{ box-sizing:border-box; }
+  body{
+    background:var(--page); color:var(--ink);
+    font-family:'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size:16px; font-weight:400; line-height:1.55; letter-spacing:-0.011em;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      repeating-linear-gradient(to right, var(--stroke) 0 1px, transparent 1px 72px),
+      repeating-linear-gradient(to bottom, var(--stroke) 0 1px, transparent 1px 72px);
+  }
+  .page{ position:relative; z-index:1; max-width:1160px; margin:0 auto;
+         padding-block:26px 80px; padding-left:22px; padding-right:22px; }
+
+  h1,h2,h3,h4{ font-family:'Newsreader','Season Serif', Georgia, serif; margin:0;
+               letter-spacing:-0.017em; text-wrap:balance; color:var(--ink); }
+  h1{ font-weight:300; font-size:clamp(38px,6.2vw,68px); line-height:1.0; }
+  h2{ font-weight:300; font-size:clamp(30px,4.2vw,46px); line-height:1.07; color:var(--ink-strong); }
+  h3{ font-weight:400; font-size:clamp(23px,2.6vw,30px); line-height:1.14; }
+  p{ margin:0; }
+  a{ color:var(--green); text-underline-offset:3px; text-decoration-color:var(--line-2); }
+  a:hover{ text-decoration-color:currentColor; }
+  .tnum{ font-variant-numeric:tabular-nums; }
+  em{ font-style:italic; }
+
+  /* their eyebrow: outlined mono pill */
+  .pill{
+    display:inline-flex; align-items:center; gap:6px; align-self:flex-start;
+    font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:12.5px;
+    letter-spacing:-0.03em; text-transform:uppercase; line-height:1;
+    border:1px solid currentColor; border-radius:999px; padding:6px 9px; white-space:nowrap;
+  }
+  .pill::before{ content:""; width:5px; height:5px; border-radius:50%; background:currentColor; }
+  .pill.ver{ color:var(--green); } .pill.mod{ color:var(--blue); } .pill.asm{ color:#9a6b12; }
+  :root[data-theme="dark"] .pill.asm, :root:not([data-theme="light"]) .pill.asm{ color:var(--amber); }
+  .pill.ink{ color:var(--ink); } .pill.onp{ color:var(--ink-strong); }
+
+  /* ── masthead + hero ── */
+  .masthead{ display:flex; justify-content:space-between; align-items:center; gap:16px;
+             padding-block:8px 34px; flex-wrap:wrap; }
+  .wordmark{ font-family:'Newsreader',Georgia,serif; font-size:22px; letter-spacing:-0.02em; }
+  .wordmark span{ color:var(--muted); }
+  .masthead .meta{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:-0.03em;
+                   text-transform:uppercase; color:var(--muted); }
+
+  .hero{ display:flex; flex-direction:column; gap:20px; padding-bottom:12px; }
+  .hero .lede{ font-size:19px; line-height:1.5; letter-spacing:-0.024em; color:var(--muted); max-width:58ch; }
+  .hero .lede b{ color:var(--ink); font-weight:500; }
+  .labels{ display:flex; flex-wrap:wrap; gap:10px 24px; padding-top:4px; }
+  .labels .lb{ display:flex; align-items:center; gap:9px; font-size:13.5px;
+               letter-spacing:-0.02em; color:var(--muted); white-space:nowrap; }
+
+  /* ── "the play" — the answer-first component ── */
+  .play{ display:flex; flex-direction:column; border-top:1px solid var(--line-2); }
+  .play .r{ display:grid; grid-template-columns:52px 1fr 190px; gap:18px; align-items:baseline;
+            padding:19px 0; border-bottom:1px solid var(--line); }
+  .play .n{ font-family:'Newsreader',Georgia,serif; font-weight:300; font-size:30px;
+            line-height:1; color:var(--deep); font-variant-numeric:tabular-nums; }
+  .play .t{ font-size:17.5px; line-height:1.45; letter-spacing:-0.022em; color:var(--ink); }
+  .play .t b{ font-weight:600; }
+  .play .w{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:-0.03em;
+            text-transform:uppercase; color:var(--faint); line-height:1.5; }
+  @media (max-width:760px){
+    .play .r{ grid-template-columns:40px 1fr; gap:12px; row-gap:8px; }
+    .play .w{ grid-column:2; }
+  }
+
+  /* ── dropdowns: explanation on demand ── */
+  .drops{ border-top:1px solid var(--line); }
+  .drop{ border-bottom:1px solid var(--line); }
+  .drop > summary{
+    list-style:none; cursor:pointer; display:grid; grid-template-columns:24px 1fr auto;
+    gap:14px; align-items:center; padding:15px 0;
+    font-size:16px; line-height:1.45; letter-spacing:-0.022em; color:var(--ink);
+  }
+  .drop > summary::-webkit-details-marker{ display:none; }
+  .drop > summary:hover{ color:var(--deep); }
+  .drop > summary:focus-visible{ outline:2px solid var(--blue); outline-offset:3px; }
+  .drop .mk{ width:22px; height:22px; border:1px solid var(--line-2); border-radius:4px;
+             display:flex; align-items:center; justify-content:center; color:var(--deep);
+             font-family:'IBM Plex Mono',monospace; font-size:13px; line-height:1; }
+  .drop .mk::before{ content:"+"; }
+  .drop[open] .mk::before{ content:"\2212"; }
+  .drop[open] > summary{ color:var(--ink-strong); }
+  .drop .badge-slot{ display:flex; gap:8px; align-items:center; }
+  .drop .inner{ padding:4px 0 26px; display:flex; flex-direction:column; gap:18px; }
+  @media (max-width:640px){ .drop > summary{ font-size:15px; } .drop .badge-slot{ display:none; } }
+
+  /* ── tab bar, modeled on their floating white nav ── */
+  .tabwrap{ position:sticky; top:env(safe-area-inset-top,0px); z-index:50; padding-block:12px;
+            background:linear-gradient(var(--page) 74%, transparent); }
+  .tabbar{ display:flex; align-items:center; gap:6px; background:var(--white);
+           border:1px solid var(--line); border-radius:999px; padding:7px;
+           overflow-x:auto; scrollbar-width:none; }
+  .tabbar::-webkit-scrollbar{ display:none; }
+  .tabbar .lead{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:-0.03em;
+                 text-transform:uppercase; color:var(--faint); padding:0 10px 0 12px; white-space:nowrap; }
+  .tab{ flex:none; display:flex; align-items:center; gap:9px; font-family:'Lato',sans-serif;
+        font-weight:700; font-size:14px; color:var(--ink); background:transparent;
+        border:none; border-radius:999px; padding:10px 18px; cursor:pointer; white-space:nowrap;
+        transition:background .15s ease, color .15s ease; }
+  .tab .no{ font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:11px;
+            letter-spacing:-0.03em; color:var(--faint); }
+  .tab:hover{ background:var(--cream); }
+  .tab[aria-selected="true"]{ background:var(--ink-strong); color:var(--on-dark); }
+  .tab[aria-selected="true"] .no{ color:var(--on-dark); opacity:.6; }
+  .tab:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
+  @media (max-width:640px){ .tabbar .lead{ display:none; } .tab{ padding:10px 14px; } }
+
+  /* ── panel bands ── */
+  .band{ border-radius:6px; padding:32px 34px 34px; display:flex; flex-direction:column; gap:16px;
+         margin-top:20px; }
+  .band.sage{ background:var(--sage); color:var(--ink-strong); }
+  .band.deep{ background:var(--deep); color:var(--on-dark); }
+  .band.cream{ background:var(--cream); color:var(--ink); border:1px solid var(--line); }
+  .band h2{ color:inherit; max-width:20ch; }
+  .band .sub{ font-size:17.5px; line-height:1.45; letter-spacing:-0.024em; max-width:58ch; opacity:.86; }
+  .band-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:18px; flex-wrap:wrap; }
+  .chapter{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:-0.03em; opacity:.7; }
+  .band-stats{ display:flex; flex-wrap:wrap; border-top:1px solid currentColor; margin-top:4px; }
+  .band-stats .bs{ padding:15px 26px 0 0; margin-right:26px; display:flex; flex-direction:column; gap:3px; }
+  .band-stats .n{ font-family:'Newsreader',Georgia,serif; font-size:30px; font-weight:300; line-height:1;
+                  font-variant-numeric:tabular-nums; }
+  .band-stats .l{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:-0.03em;
+                  text-transform:uppercase; opacity:.72; }
+  @media (max-width:640px){ .band{ padding:24px 20px 26px; } }
+
+  /* ── section rhythm ── */
+  section[role="tabpanel"]{ display:flex; flex-direction:column; }
+  section[role="tabpanel"][hidden]{ display:none !important; }
+  .blk{ padding-block:40px; border-bottom:1px solid var(--line); display:flex; flex-direction:column; gap:20px; }
+  .blk:last-of-type{ border-bottom:none; }
+  .blk-head{ display:flex; flex-direction:column; gap:12px; }
+  .blk-head .why{ font-size:16.5px; line-height:1.5; letter-spacing:-0.022em; color:var(--muted); max-width:66ch; }
+  .blk-head .why b{ color:var(--ink); font-weight:500; }
+  .note{ font-size:14px; line-height:1.55; letter-spacing:-0.015em; color:var(--muted); max-width:78ch; }
+  .note b{ color:var(--ink); font-weight:500; }
+
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:5px; padding:22px 24px;
+         display:flex; flex-direction:column; gap:12px; }
+  .card.white{ background:var(--white); }
+  .card-t{ font-family:'Newsreader',Georgia,serif; font-size:22px; font-weight:400;
+           letter-spacing:-0.017em; line-height:1.15; }
+  .two{ display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start; }
+  .three{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; align-items:start; }
+  @media (max-width:900px){ .two,.three{ grid-template-columns:1fr; } }
+
+  /* calendar strip (inside a dropdown) */
+  .cal{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .cal .c{ border-top:2px solid var(--line-2); padding-top:13px; display:flex; flex-direction:column; gap:7px; }
+  .cal .c.on{ border-top-color:var(--deep); }
+  .cal .when{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:-0.03em;
+              text-transform:uppercase; color:var(--muted); }
+  .cal .c.on .when{ color:var(--deep); }
+  .cal .what{ font-family:'Newsreader',Georgia,serif; font-size:21px; font-weight:400; line-height:1.12;
+              letter-spacing:-0.017em; }
+  .cal .why{ font-size:14px; line-height:1.5; letter-spacing:-0.018em; color:var(--muted); }
+  @media (max-width:900px){ .cal{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:560px){ .cal{ grid-template-columns:1fr; } }
+
+  /* tables */
+  .tw{ overflow-x:auto; }
+  table{ width:100%; border-collapse:collapse; font-size:14.5px; min-width:600px; letter-spacing:-0.015em; }
+  thead th{ text-align:left; font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:500;
+            letter-spacing:-0.03em; text-transform:uppercase; color:var(--muted);
+            padding:0 16px 10px 0; border-bottom:1px solid var(--line-2); white-space:nowrap; }
+  tbody td{ padding:14px 16px 14px 0; border-bottom:1px solid var(--line); vertical-align:top;
+            line-height:1.5; color:var(--muted); }
+  tbody tr:last-child td{ border-bottom:none; }
+  td.k{ color:var(--ink); font-weight:500; }
+  td.num{ font-family:'IBM Plex Mono',monospace; font-variant-numeric:tabular-nums; color:var(--ink);
+          white-space:nowrap; font-size:13.5px; }
+  code{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:-0.03em;
+        color:var(--ink); background:var(--green-soft); border-radius:3px; padding:2px 6px; white-space:nowrap; }
+  .tag{ display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:500;
+        letter-spacing:-0.03em; text-transform:uppercase; padding:4px 9px; border-radius:999px;
+        border:1px solid currentColor; white-space:nowrap; }
+  .tag.scale{ color:var(--deep); } .tag.kill{ color:var(--red); } .tag.hold{ color:var(--muted); }
+
+  /* gantt */
+  .gantt{ overflow-x:auto; }
+  .gg{ display:grid; grid-template-columns:196px repeat(6,minmax(92px,1fr)); min-width:750px;
+       align-items:center; row-gap:6px; column-gap:4px; }
+  .gg .wk{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:-0.03em;
+           text-transform:uppercase; color:var(--muted); padding-bottom:10px;
+           border-bottom:1px solid var(--line-2); text-align:center; }
+  .gg .corner{ border-bottom:1px solid var(--line-2); padding-bottom:10px; font-family:'IBM Plex Mono',monospace;
+       font-size:11.5px; letter-spacing:-0.03em; text-transform:uppercase; color:var(--muted); }
+  .lane{ font-size:14px; color:var(--ink); padding-right:14px; line-height:1.25; font-weight:500; }
+  .lane span{ display:block; font-weight:400; color:var(--faint); font-size:12px; letter-spacing:-0.02em; }
+  .bar{ height:32px; border-radius:4px; display:flex; align-items:center; padding:0 10px;
+        font-size:12px; line-height:1.15; letter-spacing:-0.02em; overflow:hidden; }
+  .bar.pub{ background:var(--green-soft); color:var(--green); }
+  .bar.send{ background:var(--deep); color:var(--on-dark); }
+  .bar.paid{ background:var(--blue-soft); color:var(--blue); }
+  .bar.earn{ background:var(--amber-soft); color:#9a6b12; }
+  :root[data-theme="dark"] .bar.earn, :root:not([data-theme="light"]) .bar.earn{ color:var(--amber); }
+  .bar.ev{ background:var(--ink-strong); color:var(--on-dark); }
+  .keyrow{ display:flex; flex-wrap:wrap; gap:10px 20px; padding-top:14px; }
+  .keyrow .ki{ display:flex; align-items:center; gap:8px; font-size:13px; color:var(--muted); letter-spacing:-0.02em; }
+  .keyrow .ks{ width:16px; height:11px; border-radius:3px; flex:none; }
+
+  /* copy specimens */
+  .spec{ background:var(--white); border:1px solid var(--line); border-radius:5px; overflow:hidden;
+         display:flex; flex-direction:column; }
+  .spec-h{ display:flex; align-items:center; justify-content:space-between; gap:12px;
+           padding:12px 20px; border-bottom:1px solid var(--line); }
+  .spec-ch{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:-0.03em;
+            text-transform:uppercase; color:var(--deep); }
+  .spec-meta{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:-0.03em; color:var(--faint); }
+  .spec-b{ padding:19px 20px; display:flex; flex-direction:column; gap:13px; flex:1; }
+  .subj{ font-family:'IBM Plex Mono',monospace; font-size:14px; letter-spacing:-0.03em; color:var(--ink);
+         background:var(--green-soft); border-radius:4px; padding:10px 12px; }
+  .copy{ font-size:15.5px; line-height:1.6; letter-spacing:-0.018em; color:var(--ink); max-width:56ch; }
+  .copy p{ margin:0 0 10px; } .copy p:last-child{ margin-bottom:0; }
+  .var{ font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:-0.03em;
+        color:var(--blue); background:var(--blue-soft); border-radius:3px; padding:1px 4px; }
+  .why-r{ display:flex; gap:11px; align-items:flex-start; margin-top:auto; padding-top:13px;
+          border-top:1px solid var(--line); }
+  .why-r .l{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:-0.03em;
+             text-transform:uppercase; color:var(--faint); flex:none; padding-top:2px; }
+  .why-r .t{ font-size:14px; line-height:1.55; letter-spacing:-0.018em; color:var(--muted); }
+  .why-r .t b{ color:var(--ink); font-weight:500; }
+
+  /* funnel */
+  .funnel{ display:flex; flex-direction:column; }
+  .f-row{ display:grid; grid-template-columns:214px 1fr 80px; gap:14px; align-items:center; padding:4px 0; }
+  .f-name{ font-size:14.5px; color:var(--ink); letter-spacing:-0.018em; }
+  .f-name span{ color:var(--faint); font-size:12.5px; display:block; }
+  .f-bar{ height:28px; border-radius:4px; min-width:4px; }
+  .f-n{ font-family:'IBM Plex Mono',monospace; font-size:14px; text-align:right; color:var(--ink);
+        font-variant-numeric:tabular-nums; }
+  .f-conv{ grid-column:1/-1; padding-left:228px; font-family:'IBM Plex Mono',monospace; font-size:11.5px;
+           letter-spacing:-0.03em; color:var(--faint); padding-block:2px 5px; }
+  @media (max-width:700px){
+    .f-row{ grid-template-columns:1fr 70px; } .f-bar{ grid-column:1/-1; } .f-conv{ padding-left:0; }
+  }
+
+  /* loop */
+  .loop{ display:grid; grid-template-columns:0.92fr 1fr; gap:26px; align-items:center; }
+  @media (max-width:900px){ .loop{ grid-template-columns:1fr; } }
+  .loop svg{ width:100%; height:auto; display:block; }
+  .steps{ display:flex; flex-direction:column; }
+  .step{ display:grid; grid-template-columns:32px 1fr 86px; gap:14px; align-items:start;
+         padding:14px 0; border-bottom:1px solid var(--line); }
+  .step:last-child{ border-bottom:none; }
+  .step .i{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:-0.03em; color:var(--deep); padding-top:3px; }
+  .step .t{ font-family:'Newsreader',Georgia,serif; font-size:20px; font-weight:400; letter-spacing:-0.017em; line-height:1.2; }
+  .step .d{ font-size:14px; line-height:1.5; letter-spacing:-0.018em; color:var(--muted); margin-top:3px; }
+  .step .clk{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:-0.03em;
+              color:var(--faint); text-align:right; padding-top:5px; }
+
+  /* ledger */
+  .lrow{ display:grid; grid-template-columns:66px 1fr 132px; gap:18px; padding:18px 0;
+         border-bottom:1px solid var(--line); align-items:start; }
+  .lrow:last-child{ border-bottom:none; }
+  .lrow .v{ font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:-0.03em; color:var(--ink); }
+  .lrow .v span{ display:block; color:var(--faint); font-size:11.5px; }
+  .lrow .sj{ font-family:'IBM Plex Mono',monospace; font-size:13.5px; letter-spacing:-0.03em; color:var(--ink); }
+  .lrow .sg{ font-size:14px; line-height:1.55; letter-spacing:-0.018em; color:var(--muted); margin-top:6px; }
+  .lrow .sg b{ color:var(--ink); font-weight:500; }
+  .met{ text-align:right; }
+  .met .big{ font-family:'Newsreader',Georgia,serif; font-size:34px; font-weight:300; line-height:1;
+             color:var(--ink); font-variant-numeric:tabular-nums; }
+  .met .l{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:-0.03em;
+           text-transform:uppercase; color:var(--faint); margin-top:4px; }
+  .met .dd{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--deep); margin-top:3px; }
+  @media (max-width:700px){ .lrow{ grid-template-columns:56px 1fr; } .met{ grid-column:2; text-align:left; } }
+
+  /* calculator */
+  .calc{ display:grid; grid-template-columns:1fr 1fr; border-radius:6px; overflow:hidden; }
+  @media (max-width:780px){ .calc{ grid-template-columns:1fr; } }
+  .calc-in{ background:var(--cream); border:1px solid var(--line); border-right:none;
+            padding:26px; display:flex; flex-direction:column; gap:16px; }
+  @media (max-width:780px){ .calc-in{ border-right:1px solid var(--line); } }
+  .calc-out{ background:var(--sage); color:var(--ink-strong); padding:26px;
+             display:flex; flex-direction:column; gap:16px; justify-content:center; }
+  .field{ display:flex; flex-direction:column; gap:6px; }
+  .field label{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:-0.03em;
+                text-transform:uppercase; color:var(--muted); }
+  .field input, .field select{ font-family:'Geist',sans-serif; font-size:16px; letter-spacing:-0.02em;
+        color:var(--ink); background:var(--page); border:1px solid var(--line-2); border-radius:5px;
+        padding:10px 12px; width:100%; }
+  .field input:focus, .field select:focus{ outline:2px solid var(--deep); outline-offset:1px; }
+  .field .h{ font-size:12.5px; color:var(--faint); letter-spacing:-0.02em; }
+  .o-big{ font-family:'Newsreader',Georgia,serif; font-weight:300; font-size:clamp(38px,5.6vw,56px);
+          line-height:1; font-variant-numeric:tabular-nums; }
+  .o-mid{ font-family:'Newsreader',Georgia,serif; font-weight:300; font-size:28px; line-height:1;
+          font-variant-numeric:tabular-nums; }
+  .o-l{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:-0.03em;
+        text-transform:uppercase; opacity:.7; margin-top:5px; }
+  .o-note{ font-size:14px; line-height:1.5; letter-spacing:-0.018em; padding-top:14px;
+           border-top:1px solid #31313133; }
+
+  /* audit fix block */
+  .fix{ background:var(--green-soft); border-radius:5px; padding:18px 20px; }
+  .fix .l{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:-0.03em;
+           text-transform:uppercase; color:var(--green); }
+  .fix .t{ font-size:15px; line-height:1.55; letter-spacing:-0.02em; color:var(--ink); margin-top:8px; }
+
+  /* plan */
+  .plan{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .pcol{ background:var(--card); border:1px solid var(--line); border-radius:5px;
+         padding:22px; display:flex; flex-direction:column; gap:15px; }
+  .pcol .d{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:-0.03em;
+            text-transform:uppercase; color:var(--deep); }
+  .pcol .n{ font-family:'Newsreader',Georgia,serif; font-size:25px; font-weight:400;
+            letter-spacing:-0.017em; line-height:1.12; margin-top:5px; }
+  .pcol ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:12px; }
+  .pcol li{ font-size:14.5px; line-height:1.5; letter-spacing:-0.018em; color:var(--muted);
+            padding-left:17px; position:relative; }
+  .pcol li::before{ content:""; position:absolute; left:0; top:8px; width:6px; height:6px;
+                    border-radius:50%; background:var(--sage); }
+  .pcol li b{ color:var(--ink); font-weight:500; }
+  .pcol .gate{ margin-top:auto; padding-top:14px; border-top:1px solid var(--line);
+               font-size:13.5px; color:var(--muted); letter-spacing:-0.018em; }
+  .pcol .gate b{ color:var(--ink); font-weight:500; }
+  @media (max-width:900px){ .plan{ grid-template-columns:1fr; } }
+
+  /* metric grid */
+  .metrics{ display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line-2); }
+  .mtile{ padding:20px 24px 20px 0; border-bottom:1px solid var(--line); border-right:1px solid var(--line);
+      display:flex; flex-direction:column; gap:6px; }
+  .mtile:nth-child(3n){ border-right:none; }
+  .mtile:not(:nth-child(3n+1)){ padding-left:24px; }
+  .mtile .mn{ font-family:'Newsreader',Georgia,serif; font-size:20px; font-weight:400;
+          letter-spacing:-0.017em; line-height:1.15; }
+  .mtile .md{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:-0.03em; color:var(--deep); }
+  .mtile .mw{ font-size:13.5px; line-height:1.5; letter-spacing:-0.018em; color:var(--muted); }
+  @media (max-width:900px){ .metrics{ grid-template-columns:1fr; }
+    .mtile{ border-right:none; padding-left:0 !important; } }
+  .nots{ display:flex; flex-direction:column; gap:11px; }
+  .nots div{ font-size:14.5px; line-height:1.55; letter-spacing:-0.018em; color:var(--muted);
+             padding-left:22px; position:relative; }
+  .nots div::before{ content:"\00D7"; position:absolute; left:0; top:-2px; color:var(--red); font-size:17px; }
+  .nots b{ color:var(--ink); font-weight:500; }
+
+  footer{ padding-top:34px; display:flex; flex-direction:column; gap:14px; }
+  .srcs{ display:flex; flex-wrap:wrap; gap:8px 18px; font-family:'IBM Plex Mono',monospace;
+         font-size:12px; letter-spacing:-0.03em; color:var(--faint); }
+  .sign{ font-size:16px; line-height:1.55; letter-spacing:-0.02em; color:var(--muted); max-width:70ch; }
+  .sign b{ color:var(--ink); font-weight:500; }
+
+  @media (prefers-reduced-motion:reduce){ *{ transition:none !important; scroll-behavior:auto !important; } }
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200;0,6..72,300;0,6..72,400;1,6..72,300&family=Geist:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Lato:wght@700&display=swap">
+
+<div class="page">
+
+  <div class="masthead">
+    <div class="wordmark">Raffey <span>&times;</span> Confido</div>
+    <div class="meta">Marketing systems &middot; built before applying</div>
+  </div>
+
+  <header class="hero">
+    <span class="pill ink">Ninety days, three things</span>
+    <h1>What I'd ship,<br>and what it moves</h1>
+    <p class="lede">You announced a <b>$55M Series B yesterday</b> and said you're hiring across go&#8209;to&#8209;market. Here's the plan first. The reasoning behind every line of it is one click away, underneath.</p>
+
+    <div class="play">
+      <div class="r">
+        <span class="n">01</span>
+        <span class="t"><b>Publish The Deduction Index.</b> Your own $1B of deduction data, cut by retailer and category &mdash; the benchmark nobody else in CPG can write, with a calculator attached that qualifies the reader while it answers them.</span>
+        <span class="w">Live by day 30<br>Owns the category's one number</span>
+      </div>
+      <div class="r">
+        <span class="n">02</span>
+        <span class="t"><b>Run it six ways for six weeks.</b> LinkedIn, cold email, the newsletter, trade press, search and Expo West &mdash; every surface fed by cuts of that single asset, so one person can actually run it.</span>
+        <span class="w">Oct &ndash; Dec, into plan season<br>60 demos, modeled</span>
+      </div>
+      <div class="r">
+        <span class="n">03</span>
+        <span class="t"><b>Close the loop every Monday.</b> Thresholds written before the send, replies classified by objection, three decisions out of a 30&#8209;minute meeting, changes shipped Wednesday.</span>
+        <span class="w">7&#8209;day cycle time<br>The part I'd defend hardest</span>
+      </div>
+    </div>
+
+    <div class="labels">
+      <span class="lb"><span class="pill ver">verified</span> from Confido's own pages</span>
+      <span class="lb"><span class="pill mod">modeled</span> my math, inputs shown</span>
+      <span class="lb"><span class="pill asm">assumption</span> I'd confirm in week one</span>
+    </div>
+  </header>
+
+  <div class="tabwrap">
+    <div class="tabbar" id="tabbar" role="tablist" aria-label="Sections">
+      <span class="lead">Console</span>
+      <button class="tab" type="button" role="tab" id="tab-1" aria-selected="true" aria-controls="p-campaign" data-target="p-campaign"><span class="no">01</span>The campaign</button>
+      <button class="tab" type="button" role="tab" id="tab-2" aria-selected="false" aria-controls="p-loop" data-target="p-loop"><span class="no">02</span>The loop</button>
+      <button class="tab" type="button" role="tab" id="tab-3" aria-selected="false" aria-controls="p-build" data-target="p-build"><span class="no">03</span>The build</button>
+    </div>
+  </div>
+
+  <!-- ══════════════ 01 ══════════════ -->
+  <section id="p-campaign" role="tabpanel" aria-labelledby="tab-1">
+
+    <div class="band sage">
+      <div class="band-top">
+        <span class="pill onp">The Deduction Index</span>
+        <span class="chapter">01 / 03</span>
+      </div>
+      <h2>One asset, cut six ways, for six weeks</h2>
+      <p class="sub">A benchmark is the only asset that's proprietary, repeatable every year, quotable by press, rankable in search, and self&#8209;qualifying when someone fills it in. You're the only company that can publish this one.</p>
+      <div class="band-stats">
+        <div class="bs"><span class="n tnum">$1B+</span><span class="l">deductions processed</span></div>
+        <div class="bs"><span class="n tnum">250+</span><span class="l">brands on platform</span></div>
+        <div class="bs"><span class="n tnum">70+</span><span class="l">retailers, ERPs, systems</span></div>
+        <div class="bs"><span class="n tnum">12</span><span class="l">retailer cuts from one pull</span></div>
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head">
+        <span class="pill mod">Working demo &middot; placeholder rates</span>
+        <h3>The calculator, live on this page</h3>
+        <p class="why">It's the qualification form that doesn't feel like one. Four inputs, one number about them &mdash; and the answers become next year's dataset.</p>
+      </div>
+      <div class="calc">
+        <div class="calc-in">
+          <div class="field">
+            <label for="calc-rev">Annual gross sales to retail</label>
+            <input id="calc-rev" type="number" min="1" max="2000" step="1" value="45">
+            <span class="h">in $ millions</span>
+          </div>
+          <div class="field">
+            <label for="calc-mix">Heaviest retailer / channel</label>
+            <select id="calc-mix">
+              <option value="4.6">Mass &amp; club &mdash; Walmart, Target, Costco, BJ's</option>
+              <option value="4.1" selected>National grocery &mdash; Kroger, Albertsons, Ahold, Aldi</option>
+              <option value="3.4">Natural &amp; specialty &mdash; UNFI, KeHE</option>
+              <option value="3.9">Convenience &amp; foodservice &mdash; Core&#8209;Mark, C&amp;S, AWG</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="calc-disputes">Disputes worked per month</label>
+            <input id="calc-disputes" type="number" min="0" max="2000" step="5" value="40">
+            <span class="h">a rough count is fine &mdash; this is the field that predicts recovery</span>
+          </div>
+        </div>
+        <div class="calc-out">
+          <div>
+            <div class="o-big" id="out-leak">$1.85M</div>
+            <div class="o-l">deducted from gross, per year</div>
+          </div>
+          <div style="display:flex;gap:32px;flex-wrap:wrap">
+            <div><div class="o-mid" id="out-invalid">$609K</div><div class="o-l">invalid or duplicate</div></div>
+            <div><div class="o-mid" id="out-recover">$384K</div><div class="o-l">recovered at your pace</div></div>
+          </div>
+          <p class="o-note" id="out-gap">You're leaving about <b>$225K</b> on the table &mdash; not because the charges are valid, but because nobody has time to work them inside the retailer's dispute window.</p>
+        </div>
+      </div>
+
+      <div class="drops">
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>Those rates are placeholders I invented, and here's what happens when the real ones come back</span><span class="badge-slot"><span class="pill mod">modeled</span></span></summary>
+          <div class="inner">
+            <p class="note">4.1% median, ~33% invalid share, recovery scaled to disputes worked &mdash; all invented to make the mechanism testable. The real ones come out of your first data pull. If the actual spread is narrower, the campaign's headline number isn't surprising any more and I rewrite the copy around whichever figure is. The asset survives either way; only the lead changes. That's the job, not a setback.</p>
+          </div>
+        </details>
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>One legal question can kill this whole campaign &mdash; I'd ask it on day one</span><span class="badge-slot"><span class="pill asm">assumption</span></span></summary>
+          <div class="inner">
+            <p class="note">Whether your customer agreements permit publishing aggregated, anonymized deduction data. I'd ask before writing a line of copy. If the answer is no, the fallback is a blinded index &mdash; retailers grouped as national mass, natural channel, club &mdash; plus a 200&#8209;brand survey. Weaker, still publishable, still the best asset in the category.</p>
+          </div>
+        </details>
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>Why a benchmark, and not another ebook</span></summary>
+          <div class="inner">
+            <div class="tw"><table style="min-width:0">
+              <tbody>
+                <tr><td class="k" style="width:130px">Proprietary</td><td>Nobody can copy it without your transaction volume.</td></tr>
+                <tr><td class="k">Repeatable</td><td>It's an annual. Year two is a trend line, which is a better story than year one.</td></tr>
+                <tr><td class="k">Linkable</td><td>Trade press cites benchmarks. Ebooks earn no links, and links are the only durable SEO asset.</td></tr>
+                <tr><td class="k">Self&#8209;qualifying</td><td>The calculator collects retailer mix and dispute volume &mdash; a lead score and next year's dataset in the same field.</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </details>
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>Why October, and why it ends at Expo West</span><span class="badge-slot"><span class="pill ver">verified</span></span></summary>
+          <div class="inner">
+            <div class="cal">
+              <div class="c on">
+                <div class="when">Sep 22 &mdash; now</div>
+                <div class="what">Series B, $55M</div>
+                <div class="why">Earned attention has a half&#8209;life of about two weeks. Funding news gets you opened; it doesn't get you a meeting. Spend it acquiring attention you can re&#8209;contact.</div>
+              </div>
+              <div class="c">
+                <div class="when">Oct &ndash; Dec</div>
+                <div class="what">2027 plans lock</div>
+                <div class="why">The only quarter where a planning or deductions purchase has a real deadline. Every brand is writing next year's deduction assumption right now &mdash; most are writing last year's number plus a guess.</div>
+              </div>
+              <div class="c">
+                <div class="when">Jan &ndash; Feb</div>
+                <div class="what">Line reviews</div>
+                <div class="why">New authorizations land. Door count jumps, deduction volume follows 60&ndash;90 days later. This is the trigger that creates Segment A.</div>
+              </div>
+              <div class="c">
+                <div class="when">Early March</div>
+                <div class="what">Expo West</div>
+                <div class="why">The tentpole. The campaign's job is to make the booth a confirmation of a relationship rather than the start of one.</div>
+              </div>
+            </div>
+            <p class="note">The Series B date and detail are verified. Plan&#8209;season and line&#8209;review timing is category knowledge I'd sanity&#8209;check against your own closed&#8209;won dates in week one.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head">
+        <span class="pill mod">Counts modeled &middot; signals assumed</span>
+        <h3>Three segments, built from triggers rather than titles</h3>
+      </div>
+      <div class="tw"><table>
+        <thead><tr><th>Segment</th><th>The filter I'd build</th><th style="text-align:right">Accounts</th><th>Trigger that puts them in</th><th>Entry channel</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="k">A &middot; Just got the door</td>
+            <td>$15&ndash;75M gross, won a new national retailer or distributor authorization in the last two quarters, finance team of three or fewer</td>
+            <td class="num" style="text-align:right">610</td>
+            <td>Door count jumps; deduction volume follows 60&ndash;90 days later and nobody is staffed for it</td>
+            <td>Cold email + DM</td>
+          </tr>
+          <tr>
+            <td class="k">B &middot; Plan season</td>
+            <td>$75&ndash;250M, demand planner on staff, broker network, still on spreadsheets or a legacy trade tool</td>
+            <td class="num" style="text-align:right">430</td>
+            <td>2027 AOP is due and the deduction and trade assumptions in it are guesses</td>
+            <td>Paid ABM + webinar</td>
+          </tr>
+          <tr>
+            <td class="k">C &middot; Foodservice entrant</td>
+            <td>Retail brand adding foodservice or c&#8209;store distribution &mdash; the expansion your Series B explicitly funds</td>
+            <td class="num" style="text-align:right">280</td>
+            <td>New lane, unfamiliar deduction codes, different promo mechanics</td>
+            <td>Earned + partners</td>
+          </tr>
+        </tbody>
+      </table></div>
+      <div class="drops">
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>Where those trigger signals actually come from</span></summary>
+          <div class="inner">
+            <p class="note">New&#8209;item velocity in SPINS or Nielsen, trade&#8209;show exhibitor lists, broker announcement posts, job postings for "Demand Planner" or "Deductions Analyst," ERP migration chatter, and the retailers named on your own integrations page. Account counts are modeled from the CPG brand population above $10M &mdash; they're the number I'd most want to replace with your closed&#8209;won data in week one.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head">
+        <span class="pill ver">Proof pulled from your own pages</span>
+        <h3>What each person needs to hear</h3>
+      </div>
+      <div class="tw"><table>
+        <thead><tr><th>Persona</th><th>Judged on</th><th>The sentence</th><th>Proof I'd send</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Controller / AR</td><td>Unapplied cash, backlog age</td><td>"Your backlog isn't a staffing problem, it's a matching problem."</td><td>Feastables reclaimed $500K in invalid and duplicate charges</td></tr>
+          <tr><td class="k">VP Finance / CFO</td><td>Gross&#8209;to&#8209;net, margin per point</td><td>"You're negotiating the 4% you can see and eating the 1.4% you can't."</td><td>Dude Wipes: 2&times; revenue on the same team, ~$300K headcount avoided</td></tr>
+          <tr><td class="k">VP Sales</td><td>Forecast accuracy, broker reporting</td><td>"Your forecast and your trade spend live in different files. That's the whole variance."</td><td>Deep Indian Kitchen: a 2027 annual plan across 24,500 stores</td></tr>
+          <tr><td class="k">COO / Supply</td><td>OTIF fines, weeks of cover</td><td>"Beat plan all spring, overstocked by summer."</td><td>Your own newsletter headline &mdash; already the best line you've written</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">All four proof points are yours. You have four hard dollar outcomes sitting under a Resources menu with nothing pointed at them.</p>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head">
+        <span class="pill mod">Six weeks &middot; seven surfaces</span>
+        <h3>The orchestration</h3>
+        <p class="why">Nothing in week three needs writing from scratch. The retailer cards, the microsite pages and the cold&#8209;email first lines are all cuts of the same dataset &mdash; that's the only way one person runs this.</p>
+      </div>
+      <div class="gantt">
+        <div class="gg">
+          <div class="corner">Channel</div>
+          <div class="wk">Wk 1</div><div class="wk">Wk 2</div><div class="wk">Wk 3</div><div class="wk">Wk 4</div><div class="wk">Wk 5</div><div class="wk">Wk 6</div>
+
+          <div class="lane">LinkedIn &mdash; founders<span>Justin &amp; Kara, first person</span></div>
+          <div class="bar pub">Teaser stat</div><div class="bar send">Index launch</div><div class="bar pub">Retailer card</div><div class="bar pub">Retailer card</div><div class="bar pub">Reader objection</div><div class="bar pub">Year&#8209;2 tease</div>
+
+          <div class="lane">LinkedIn &mdash; paid ABM<span>Segments A &amp; B, 1,040 accounts</span></div>
+          <div></div><div class="bar paid">Doc ad</div><div class="bar paid">Doc ad</div><div class="bar paid">Retarget: calc</div><div class="bar paid">Retarget: case</div><div class="bar paid">Demo offer</div>
+
+          <div class="lane">Email &mdash; cold<span>600/wk, 3 steps, split by segment</span></div>
+          <div></div><div class="bar send">E1 their number</div><div class="bar send">E2 proof</div><div class="bar send">E3 deadline</div><div class="bar send">Cohort 2, v2</div><div class="bar send">Cohort 3, v3</div>
+
+          <div class="lane">Email &mdash; newsletter<span>New on the Shelf, reformatted</span></div>
+          <div class="bar pub">Benchmark issue</div><div class="bar pub">Retailer deep&#8209;dive</div><div class="bar pub">Reader Q&amp;A</div><div class="bar pub">Category cut</div><div class="bar pub">Dispute window</div><div class="bar pub">Plan checklist</div>
+
+          <div class="lane">Earned &amp; community<span>trade press, podcasts, Slack groups</span></div>
+          <div class="bar earn">Embargo pitches</div><div class="bar earn">Nosh / BevNET</div><div class="bar earn">Podcast reads</div><div></div><div class="bar earn">Startup CPG AMA</div><div class="bar earn">Guest column</div>
+
+          <div class="lane">Website &amp; search<span>the durable half</span></div>
+          <div class="bar pub">Index microsite</div><div class="bar pub">Calculator live</div><div class="bar pub">3 retailer pages</div><div class="bar pub">3 retailer pages</div><div class="bar pub">ERP pages</div><div class="bar pub">Case&#8209;study LPs</div>
+
+          <div class="lane">Events &amp; partners<span>brokers, 3PLs, agencies</span></div>
+          <div></div><div></div><div class="bar earn">Co&#8209;marketing</div><div class="bar earn">Broker webinar</div><div class="bar ev">Expo West pre&#8209;book</div><div class="bar ev">Expo West pre&#8209;book</div>
+        </div>
+        <div class="keyrow">
+          <span class="ki"><span class="ks" style="background:var(--green-soft)"></span>Publish &mdash; owned</span>
+          <span class="ki"><span class="ks" style="background:var(--deep)"></span>Send &mdash; outbound</span>
+          <span class="ki"><span class="ks" style="background:var(--blue-soft)"></span>Spend &mdash; paid</span>
+          <span class="ki"><span class="ks" style="background:var(--amber-soft)"></span>Earn &mdash; press, community, partners</span>
+          <span class="ki"><span class="ks" style="background:var(--ink-strong)"></span>Meet &mdash; events</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head">
+        <span class="pill mod">Placeholder stats, real structure</span>
+        <h3>The actual copy</h3>
+        <p class="why">Subject lines lead with a number, because a number is the only thing in an inbox that can't be skimmed past. The ask at every step is for a <b>document</b>, not a call.</p>
+      </div>
+      <div class="two">
+        <div class="spec">
+          <div class="spec-h"><span class="spec-ch">Cold email &middot; step 1</span><span class="spec-meta">Segment A</span></div>
+          <div class="spec-b">
+            <div class="subj">4.1% of gross, before you negotiate</div>
+            <div class="copy">
+              <p><span class="var">{{first}}</span> &mdash; across $1B of retailer deductions we've processed for 250+ brands, the median brand gives back 4.1% of gross sales. At <span class="var">{{brand}}</span>'s scale that's roughly <span class="var">{{$leak}}</span> a year, and about a third of it is invalid: duplicate charges, promo that was authorized, shortages that shipped complete.</p>
+              <p>We just published the breakdown by retailer. <span class="var">{{retailer}}</span> is the worst line on the page.</p>
+              <p>Want the two&#8209;page cut for <span class="var">{{retailer}}</span>?</p>
+            </div>
+            <div class="why-r"><span class="l">why</span><span class="t">Their number in line one, ours never. Every variable is derivable from data you already have on their retailer mix &mdash; no per&#8209;prospect research, which is what makes 600 sends a week possible for one person.</span></div>
+          </div>
+        </div>
+
+        <div class="spec">
+          <div class="spec-h"><span class="spec-ch">LinkedIn &middot; founder post</span><span class="spec-meta">launch day</span></div>
+          <div class="spec-b">
+            <div class="copy">
+              <p>We looked at $1B of retailer deductions across 250+ brands.</p>
+              <p>The median brand loses 4.1% of gross sales. The best&#8209;run brand on our platform loses 1.6%.</p>
+              <p>That gap isn't negotiating skill. It's documentation &mdash; whether you can produce the PO, the BOL and the promo authorization inside the retailer's dispute window.</p>
+              <p>Full breakdown by retailer, free, no form for the headline numbers. The Deduction Index 2026, link in comments.</p>
+            </div>
+            <div class="why-r"><span class="l">why</span><span class="t">Four short paragraphs, one counterintuitive claim, the mechanism in a single sentence. Founders' accounts carry this better than the company page; the company page reposts.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="drops">
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>Steps 2 and 3 of the email sequence, with the reasoning</span></summary>
+          <div class="inner">
+            <div class="two">
+              <div class="spec">
+                <div class="spec-h"><span class="spec-ch">Cold email &middot; step 2</span><span class="spec-meta">+3 days &middot; proof</span></div>
+                <div class="spec-b">
+                  <div class="subj">Feastables got $500K back</div>
+                  <div class="copy">
+                    <p>Same retailers as you, same problem. Feastables found $500K in invalid and duplicate charges in year one. The work wasn't negotiation &mdash; it was matching remittance lines to promo authorizations automatically instead of by hand.</p>
+                    <p>Two&#8209;minute version here.</p>
+                    <p>If someone on your team is still exporting the retailer portal to Excel on Fridays, that's the whole story.</p>
+                  </div>
+                  <div class="why-r"><span class="l">why</span><span class="t">The last line is the qualifier. People who do that recognize themselves instantly; people who don't will unsubscribe &mdash; and both outcomes are useful.</span></div>
+                </div>
+              </div>
+              <div class="spec">
+                <div class="spec-h"><span class="spec-ch">Cold email &middot; step 3</span><span class="spec-meta">+5 days &middot; deadline</span></div>
+                <div class="spec-b">
+                  <div class="subj">your 2027 plan, before line review</div>
+                  <div class="copy">
+                    <p>Last one from me. If you're locking the 2027 plan in the next six weeks, the deduction assumption in it is probably last year's number plus a guess.</p>
+                    <p>I'll send the retailer&#8209;level medians so you can put a real one in. No call needed &mdash; reply "send" and it's yours.</p>
+                  </div>
+                  <div class="why-r"><span class="l">why</span><span class="t">A real deadline that belongs to them, not a fake one that belongs to us. The give&#8209;with&#8209;no&#8209;ask close is what makes the no&#8209;list re&#8209;contactable in January.</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>The LinkedIn DM, and the newsletter rewrite that costs you nothing</span><span class="badge-slot"><span class="pill ver">verified</span></span></summary>
+          <div class="inner">
+            <div class="two">
+              <div class="spec">
+                <div class="spec-h"><span class="spec-ch">LinkedIn DM</span><span class="spec-meta">after a download</span></div>
+                <div class="spec-b">
+                  <div class="copy">
+                    <p>Saw you pulled the Index &mdash; the <span class="var">{{retailer}}</span> page is the one people screenshot most.</p>
+                    <p>Genuinely curious: are you working disputes in the portal yourself, or has someone taken it over? I'm collecting how teams handle the 30&#8209;day window for next year's edition.</p>
+                  </div>
+                  <div class="why-r"><span class="l">why</span><span class="t">A research question, not a pitch &mdash; and it's true, the answers go into the next Index. Every reply is simultaneously a qualification and a copy input. <b>This is the loop running inside a single DM.</b></span></div>
+                </div>
+              </div>
+              <div class="spec">
+                <div class="spec-h"><span class="spec-ch">Newsletter &middot; reformat</span><span class="spec-meta">New on the Shelf</span></div>
+                <div class="spec-b">
+                  <div class="copy">
+                    <p style="color:var(--faint)"><b>Today:</b> "Plan trade without the clicks" &mdash; a product update.</p>
+                    <p><b>Instead:</b> "Trade planning: what 250 brands budgeted vs. actually spent in Q3." Same product news, delivered as the reader's benchmark, with the product appearing in paragraph three as the mechanism.</p>
+                    <p>Keep the changelog &mdash; as a fixed <em>What shipped</em> block at the bottom.</p>
+                  </div>
+                  <div class="why-r"><span class="l">why</span><span class="t">Your newsletter describes itself as "product updates, upcoming events, and industry highlights." That's a changelog with a mailing list attached. Same cadence, same effort &mdash; and every issue becomes a reason for a non&#8209;customer to stay subscribed.</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head">
+        <span class="pill mod">Every figure modeled</span>
+        <h3>What it produces</h3>
+      </div>
+      <div class="funnel">
+        <div class="f-row">
+          <div class="f-name">Reached<span>3,600 cold sends + 1,040 ABM accounts + organic</span></div>
+          <div class="f-bar" style="width:100%;background:var(--blue-soft)"></div>
+          <div class="f-n">114,000</div>
+        </div>
+        <div class="f-conv">&darr; 3.7% &mdash; impression to page view is the entire job of the hook</div>
+        <div class="f-row">
+          <div class="f-name">Read the Index<span>microsite or retailer page, over 30s</span></div>
+          <div class="f-bar" style="width:52%;background:var(--blue-soft)"></div>
+          <div class="f-n">4,200</div>
+        </div>
+        <div class="f-conv">&darr; 18.6% &mdash; calculator start&#8209;to&#8209;complete is the metric that pays for the asset</div>
+        <div class="f-row">
+          <div class="f-name">Told us their numbers<span>calculator completed</span></div>
+          <div class="f-bar" style="width:31%;background:var(--sage)"></div>
+          <div class="f-n">780</div>
+        </div>
+        <div class="f-conv">&darr; 31% &mdash; scored on revenue band, retailer mix, dispute volume</div>
+        <div class="f-row">
+          <div class="f-name">Fit the ICP<span>scored A or B, not just curious</span></div>
+          <div class="f-bar" style="width:19%;background:var(--sage)"></div>
+          <div class="f-n">240</div>
+        </div>
+        <div class="f-conv">&darr; 25% &mdash; plus 26 demos from cold reply, counted once</div>
+        <div class="f-row">
+          <div class="f-name">Booked a demo<span>held, not scheduled</span></div>
+          <div class="f-bar" style="width:9%;background:var(--deep)"></div>
+          <div class="f-n">60</div>
+        </div>
+        <div class="f-conv">&darr; 22% on a 90&ndash;120 day cycle &mdash; most of this lands in Q1, not Q4</div>
+        <div class="f-row">
+          <div class="f-name">Closed won<span>marketing&#8209;sourced</span></div>
+          <div class="f-bar" style="width:4%;background:var(--ink-strong)"></div>
+          <div class="f-n">13</div>
+        </div>
+      </div>
+      <div class="drops">
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>The inputs behind those numbers, and what would break the model</span><span class="badge-slot"><span class="pill mod">modeled</span></span></summary>
+          <div class="inner">
+            <p class="note">3,600 cold sends at 5.5% reply, 35% of replies positive, 45% of those to a held demo. 108,000 paid and organic impressions at 3.5% CTR. Calculator start&#8209;to&#8209;complete at 60%, which is the number I'd defend with field count. Close rate 22% on a 90&ndash;120 day cycle.</p>
+            <p class="note"><b>What breaks it:</b> if your average cycle runs longer than 120 days, or deals need a CFO who doesn't read LinkedIn, the demo number holds and closed&#8209;won slips a quarter. I'd rather be wrong on the timing than on the mechanism.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 02 ══════════════ -->
+  <section id="p-loop" role="tabpanel" aria-labelledby="tab-2" hidden>
+
+    <div class="band deep">
+      <div class="band-top">
+        <span class="pill onp" style="color:var(--on-dark)">The feedback loop</span>
+        <span class="chapter">02 / 03</span>
+      </div>
+      <h2>A loop is only a loop if there's a meeting where it closes</h2>
+      <p class="sub">A test tells you which of two things you already thought of did better. A loop changes what you send, who you send it to, and eventually what you're selling &mdash; on a clock. So the number that matters here isn't reply rate, it's cycle time.</p>
+      <div class="band-stats">
+        <div class="bs"><span class="n tnum">7 days</span><span class="l">signal to shipped change</span></div>
+        <div class="bs"><span class="n tnum">30 min</span><span class="l">Monday review, hard stop</span></div>
+        <div class="bs"><span class="n tnum">3</span><span class="l">decisions leave the room</span></div>
+        <div class="bs"><span class="n tnum">200</span><span class="l">minimum n before judging</span></div>
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head">
+        <span class="pill ink">Six stages, one week</span>
+        <h3>The loop, with a clock on it</h3>
+      </div>
+      <div class="loop">
+        <svg viewBox="0 0 400 350" role="img" aria-label="Six-stage weekly feedback loop: ship, capture, score, read, decide, rewrite">
+          <defs>
+            <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor"></path>
+            </marker>
+          </defs>
+          <g style="color:var(--line-2)" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 6">
+            <circle cx="200" cy="175" r="120"></circle>
+          </g>
+          <g style="color:var(--sage)" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M 259 80 A 120 120 0 0 1 316 154" marker-end="url(#ah)"></path>
+            <path d="M 320 196 A 120 120 0 0 1 263 270" marker-end="url(#ah)"></path>
+            <path d="M 223 292 A 120 120 0 0 1 141 292" marker-end="url(#ah)"></path>
+            <path d="M 137 270 A 120 120 0 0 1 80 196" marker-end="url(#ah)"></path>
+            <path d="M 80 154 A 120 120 0 0 1 137 80" marker-end="url(#ah)"></path>
+            <path d="M 177 57 A 120 120 0 0 1 223 57" marker-end="url(#ah)"></path>
+          </g>
+          <g text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="-0.3">
+            <circle cx="200" cy="55" r="28" fill="var(--deep)"></circle>
+            <text x="200" y="53" fill="var(--on-dark)">SHIP</text><text x="200" y="66" font-size="9" fill="var(--on-dark)" opacity="0.75">wed</text>
+            <circle cx="304" cy="115" r="28" fill="var(--sage)"></circle>
+            <text x="304" y="113" fill="#12120f">CAPTURE</text><text x="304" y="126" font-size="9" fill="#12120f" opacity="0.7">0&ndash;48h</text>
+            <circle cx="304" cy="235" r="28" fill="var(--sage)"></circle>
+            <text x="304" y="233" fill="#12120f">SCORE</text><text x="304" y="246" font-size="9" fill="#12120f" opacity="0.7">nightly</text>
+            <circle cx="200" cy="295" r="28" fill="var(--deep)"></circle>
+            <text x="200" y="293" fill="var(--on-dark)">READ</text><text x="200" y="306" font-size="9" fill="var(--on-dark)" opacity="0.75">mon 9:30</text>
+            <circle cx="96" cy="235" r="28" fill="var(--deep)"></circle>
+            <text x="96" y="233" fill="var(--on-dark)">DECIDE</text><text x="96" y="246" font-size="9" fill="var(--on-dark)" opacity="0.75">mon 10:00</text>
+            <circle cx="96" cy="115" r="28" fill="var(--sage)"></circle>
+            <text x="96" y="113" fill="#12120f">REWRITE</text><text x="96" y="126" font-size="9" fill="#12120f" opacity="0.7">tue</text>
+            <text x="200" y="172" font-family="Newsreader, Georgia, serif" font-weight="300" font-size="44" fill="var(--ink)">7</text>
+            <text x="200" y="192" font-size="10" fill="var(--muted)">DAYS, SIGNAL TO</text>
+            <text x="200" y="206" font-size="10" fill="var(--muted)">SHIPPED CHANGE</text>
+          </g>
+        </svg>
+
+        <div class="steps">
+          <div class="step"><span class="i">01</span><div><div class="t">Ship</div><div class="d">Everything goes out with a variant ID attached. An untagged send is a send you can't learn from.</div></div><span class="clk">Wed</span></div>
+          <div class="step"><span class="i">02</span><div><div class="t">Capture</div><div class="d">Replies classified by objection, not sentiment. Calculator inputs stored as fields, not form blobs.</div></div><span class="clk">0&ndash;48h</span></div>
+          <div class="step"><span class="i">03</span><div><div class="t">Score</div><div class="d">Every variant against a threshold written down <em>before</em> the send. This is what stops us arguing about whether 4.2% is good.</div></div><span class="clk">Nightly</span></div>
+          <div class="step"><span class="i">04</span><div><div class="t">Read</div><div class="d">Thirty minutes, Monday. One page. Marketing, one AE, whoever ran the sends.</div></div><span class="clk">Mon 9:30</span></div>
+          <div class="step"><span class="i">05</span><div><div class="t">Decide</div><div class="d">Scale, iterate or kill, in the same meeting. Nothing gets "looked into."</div></div><span class="clk">Mon 10:00</span></div>
+          <div class="step"><span class="i">06</span><div><div class="t">Rewrite</div><div class="d">Copy, list or offer &mdash; changed and queued Tuesday. If it takes more than a day it was a project, not a loop decision.</div></div><span class="clk">Tue</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head">
+        <span class="pill mod">Illustrative</span>
+        <h3>The board, week four</h3>
+        <p class="why"><b>Thresholds, written before the sends:</b> reply &ge;6% scale, 3&ndash;6% iterate, &lt;3% kill, nothing judged under 200 sends. LinkedIn CTR &ge;2.5% scale. Calculator completion &ge;55%, or cut a field. Kill any channel above $75 per Index read.</p>
+      </div>
+      <div class="tw"><table>
+        <thead><tr><th>Variant</th><th>Test</th><th style="text-align:right">Result</th><th style="text-align:right">n</th><th>Call</th><th>What we do Tuesday</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Hook</td><td>"4.1% of gross" vs. "the 30&#8209;day window"</td><td class="num" style="text-align:right">2.9% / 1.4%</td><td class="num" style="text-align:right">41k imp</td><td><span class="tag scale">scale</span></td><td>All paid spend to the percentage hook; the window becomes body copy</td></tr>
+          <tr><td class="k">Subject</td><td>"your 2027 plan" vs. "4.1% of gross" vs. "quick question re: Kroger"</td><td class="num" style="text-align:right">7.1 / 5.8 / 2.2%</td><td class="num" style="text-align:right">600 ea</td><td><span class="tag scale">scale</span></td><td>Deadline subject moves to step 1; retire "quick question" for good</td></tr>
+          <tr><td class="k">Segment</td><td>A new&#8209;authorization vs. B plan&#8209;season vs. C foodservice</td><td class="num" style="text-align:right">6.9 / 5.1 / 2.4%</td><td class="num" style="text-align:right">840/720/140</td><td><span class="tag hold">hold C</span></td><td>C is under n &mdash; no conclusion. Finish the cohort before deciding</td></tr>
+          <tr><td class="k">Asset gate</td><td>Gated PDF vs. ungated + calculator</td><td class="num" style="text-align:right">31% / 69%</td><td class="num" style="text-align:right">1,180</td><td><span class="tag scale">scale</span></td><td>Remove the form everywhere &mdash; the calculator collects more than it did</td></tr>
+          <tr><td class="k">Channel cost</td><td>LinkedIn ABM vs. podcast read vs. search</td><td class="num" style="text-align:right">$41 / $118 / $22</td><td class="num" style="text-align:right">per read</td><td><span class="tag kill">kill podcast</span></td><td>Budget moves to search; keep one show that reaches ops, not finance</td></tr>
+          <tr><td class="k">CTA</td><td>"Book a call" vs. "Want the two&#8209;page cut?"</td><td class="num" style="text-align:right">0.9% / 6.2%</td><td class="num" style="text-align:right">1,200</td><td><span class="tag scale">scale</span></td><td>Document&#8209;ask everywhere, including the ads. The call comes one step later</td></tr>
+        </tbody>
+      </table></div>
+      <div class="drops">
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>Two results on this board I don't trust yet, and why</span></summary>
+          <div class="inner">
+            <p class="note">Segment C is <b>held, not killed</b> &mdash; 140 sends is noise, and killing a segment on noise is how a company decides a market doesn't exist.</p>
+            <p class="note">The CTA result is the largest effect on the board, which should make us suspicious: it's probably measuring intent rather than persuasion. The real test is whether document&#8209;askers close at the same rate. That's a 90&#8209;day question, and it goes on the board with a date, not a shrug.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head">
+        <span class="pill mod">Illustrative</span>
+        <h3>The loop moving one email</h3>
+      </div>
+      <div>
+        <div class="lrow">
+          <div class="v">v1<span>Oct 6</span></div>
+          <div>
+            <div class="sj">"Automate your deduction management"</div>
+            <div class="sg"><b>Signal:</b> four of nine replies said "we already have a system." We led with the category, so we got compared to the category.</div>
+          </div>
+          <div class="met"><div class="big">2.1%</div><div class="l">reply &middot; n=400</div></div>
+        </div>
+        <div class="lrow">
+          <div class="v">v2<span>Oct 13</span></div>
+          <div>
+            <div class="sj">"4.1% of gross, before you negotiate"</div>
+            <div class="sg"><b>Changed:</b> opens with their number, not our category. <b>Signal:</b> positive replies clustered in brands that had just won a new retailer &mdash; three volunteered it unprompted.</div>
+          </div>
+          <div class="met"><div class="big">4.6%</div><div class="l">reply &middot; n=600</div><div class="dd">+2.5pp</div></div>
+        </div>
+        <div class="lrow">
+          <div class="v">v3<span>Oct 20</span></div>
+          <div>
+            <div class="sj">"4.1% of gross, before you negotiate"</div>
+            <div class="sg"><b>Changed:</b> first line names their new authorization; the ask moved from a call to the two&#8209;page cut. <b>Result:</b> 41% of positives were Segment A, which is what rebuilt the list.</div>
+          </div>
+          <div class="met"><div class="big">7.3%</div><div class="l">reply &middot; n=600</div><div class="dd">+2.7pp</div></div>
+        </div>
+      </div>
+      <p class="note"><b>Caveat:</b> v1&rarr;v2 changed the subject <em>and</em> drifted the segment, so part of that +2.5pp is list quality, not copy. I'd hold the segment constant next round and accept a slower answer.</p>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head">
+        <h3>The machinery underneath</h3>
+      </div>
+      <div class="drops">
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>Every signal captured, and the decision each one feeds</span><span class="badge-slot"><span class="pill asm">stack assumed</span></span></summary>
+          <div class="inner">
+            <div class="tw"><table>
+              <thead><tr><th>Signal</th><th>Where it fires</th><th>What we keep</th><th>The decision it feeds</th></tr></thead>
+              <tbody>
+                <tr><td class="k"><code>hook_impression</code></td><td>LinkedIn organic + ads export</td><td>hook_id, segment, format</td><td>Which of the twelve retailer cards gets paid spend next week</td></tr>
+                <tr><td class="k"><code>index_view</code></td><td>Index microsite</td><td>utm_campaign, retailer page, scroll depth</td><td>Which retailer page to build next &mdash; readers pick the roadmap</td></tr>
+                <tr><td class="k"><code>calc_complete</code></td><td>Calculator</td><td>revenue band, retailer mix, dispute volume</td><td><b style="color:var(--ink)">Two things at once:</b> a lead score, and a row in next year's Index</td></tr>
+                <tr><td class="k"><code>reply_classified</code></td><td>Inbox &rarr; CRM</td><td>objection_tag, from a fixed list of nine</td><td>Message library &mdash; three of the same tag rewrites the sequence</td></tr>
+                <tr><td class="k"><code>demo_held</code></td><td>CRM</td><td>source hook, first objection on the call</td><td>Next month's subject lines come from here, not a swipe file</td></tr>
+                <tr><td class="k"><code>deal_lost</code></td><td>CRM</td><td>stage, reason, competitor named</td><td>Segment definition &mdash; losing the same way twice means the filter is wrong</td></tr>
+                <tr><td class="k"><code>closed_won</code></td><td>CRM</td><td>days from first touch, full touch path</td><td>Channel budget, and the only number that settles a channel argument</td></tr>
+              </tbody>
+            </table></div>
+            <div class="card" style="background:var(--green-soft);border-color:transparent">
+              <p style="font-size:15.5px;line-height:1.55;letter-spacing:-0.02em;color:var(--ink)"><b>The part people skip:</b> <code style="background:var(--white)">calc_complete</code> is the whole design. Someone tells us their retailer mix and dispute volume in exchange for a number about themselves. That row scores the lead, writes the first line of their email, and becomes a data point in next year's Index. <b>The loop feeds the asset, not just the copy</b> &mdash; which is why year two costs a fraction of year one.</p>
+            </div>
+          </div>
+        </details>
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>When the loop is allowed to change the strategy, not just the copy</span></summary>
+          <div class="inner">
+            <div class="three">
+              <div class="card">
+                <div class="card-t">Three kills in a row, same segment</div>
+                <p class="note">The copy isn't the problem, the segment is. Escalate to a list rebuild, not a fourth rewrite &mdash; which is where most outbound programs quietly die.</p>
+              </div>
+              <div class="card">
+                <div class="card-t">Same objection on three demos</div>
+                <p class="note">That's positioning, and it belongs on the website and in the sales deck, not in a subject line. It leaves the loop and goes to the product marketing backlog with the three quotes attached.</p>
+              </div>
+              <div class="card">
+                <div class="card-t">A question asked twice in the calculator</div>
+                <p class="note">People typing something we didn't ask for is the cheapest product research there is. It goes to the product team weekly, verbatim, with counts.</p>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>The Monday agenda, and what leaves the room</span></summary>
+          <div class="inner">
+            <div class="two">
+              <div class="card white">
+                <div class="card-t">Four questions, in this order</div>
+                <div class="tw"><table style="min-width:0">
+                  <tbody>
+                    <tr><td class="num" style="width:34px">1</td><td>What crossed a threshold, up or down? <span style="color:var(--faint)">Numbers only, no stories yet.</span></td></tr>
+                    <tr><td class="num">2</td><td>What did people actually say? <span style="color:var(--faint)">Three real replies, read aloud.</span></td></tr>
+                    <tr><td class="num">3</td><td>What are we changing, by Wednesday? <span style="color:var(--faint)">Three decisions, named owner.</span></td></tr>
+                    <tr><td class="num">4</td><td>What did we learn that isn't about copy? <span style="color:var(--faint)">Goes to product, sales or the roadmap.</span></td></tr>
+                  </tbody>
+                </table></div>
+              </div>
+              <div class="card">
+                <div class="card-t">Who's in the room</div>
+                <p class="note">Whoever ran the sends, one AE who took the calls, someone from product every other week. Thirty minutes, hard stop.</p>
+                <p class="note">One page leaves: three decisions, the threshold each was judged against, and the one thing we got wrong last week. That last line is why anyone trusts the page by week six.</p>
+                <p class="note">The AE isn't there as a courtesy. Marketing's fastest signal is what an objection sounded like on Thursday, and no dashboard carries that.</p>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 03 ══════════════ -->
+  <section id="p-build" role="tabpanel" aria-labelledby="tab-3" hidden>
+
+    <div class="band cream">
+      <div class="band-top">
+        <span class="pill ver">Audit verified today</span>
+        <span class="chapter">03 / 03</span>
+      </div>
+      <h2>Five things I'd fix in your current marketing</h2>
+      <p class="sub">I read everything you publish before writing any of this. None of it is a knock &mdash; it's what marketing looks like when founders are doing it between customer calls, which is the correct trade until you hire for it.</p>
+      <div class="band-stats" style="border-color:var(--line-2)">
+        <div class="bs"><span class="n tnum">9</span><span class="l">blog posts visible</span></div>
+        <div class="bs"><span class="n tnum">3 of 9</span><span class="l">are engineering or hiring</span></div>
+        <div class="bs"><span class="n tnum">1</span><span class="l">filed under CPG playbooks</span></div>
+        <div class="bs"><span class="n tnum">6</span><span class="l">case studies, unpointed&#8209;at</span></div>
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head">
+        <span class="pill ver">From confidotech.com, today</span>
+        <h3>The audit</h3>
+      </div>
+      <div class="drops">
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>Your blog talks to candidates, not to a controller</span></summary>
+          <div class="inner">
+            <p class="note">Of the nine posts on <em>The Confido Aisle</em>, three are Engineering &mdash; two founding&#8209;engineer interviews and an AI hire announcement &mdash; and exactly one is filed under CPG Playbooks. There's a gap from Apr 1 to May 27, and another to Jul 7.</p>
+            <div class="fix"><div class="l">fix</div><div class="t">Keep the engineering posts, they're good recruiting. Add a second track on a real cadence that only answers buyer questions, starting with the four objections your AEs hear most. Two posts a month, both sourced from sales calls.</div></div>
+          </div>
+        </details>
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>Your newsletter is a changelog with a mailing list attached</span></summary>
+          <div class="inner">
+            <p class="note"><em>New on the Shelf</em> describes itself as "Confido's weekly roundup of product updates, upcoming events, and industry highlights," and the cadence has slipped &mdash; Aug 5, 12, 20, then Sep 9. Your best headline, "Beat Plan All Spring, Overstocked by Summer," is buried in it.</p>
+            <div class="fix"><div class="l">fix</div><div class="t">Lead every issue with one number a non&#8209;customer cares about; move product news to a fixed block at the bottom. Same effort, same cadence &mdash; and suddenly a prospect has a reason to stay subscribed for the nine months before they buy.</div></div>
+          </div>
+        </details>
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>You have four hard dollar outcomes and nothing pointed at them</span></summary>
+          <div class="inner">
+            <p class="note">$500K reclaimed at Feastables, $325K at Every Man Jack, ~$300K of headcount avoided at Dude Wipes with 2&times; revenue on the same team, a 24,500&#8209;store annual plan at Deep Indian Kitchen, and a competitive win at Evergreen &mdash; all sitting under a Resources menu.</p>
+            <div class="fix"><div class="l">fix</div><div class="t">Each one becomes a campaign, not a page: the dollar figure in the H1, a landing page per persona, a paid audience of lookalikes in the same channel, and one email sequence built on that number alone.</div></div>
+          </div>
+        </details>
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>"70+ systems" names retailers but not the software</span></summary>
+          <div class="inner">
+            <p class="note">The integrations page lists Ahold, Albertsons, Aldi, BJ's, Costco, AWG, Certco, Core&#8209;Mark and C&amp;S &mdash; then abstracts the rest to "Accounting, ERPs, and Sales Data."</p>
+            <div class="fix"><div class="l">fix</div><div class="t">Every named system is a search surface and a partner co&#8209;marketing conversation. One page per integration, named, with the specific thing it does. This is the cheapest durable traffic available to you.</div></div>
+          </div>
+        </details>
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>Eight products &times; four teams &times; six industries, one shape of landing page</span></summary>
+          <div class="inner">
+            <p class="note">The matrix exists in the nav, and the industry pages are the only ICP&#8209;shaped entry points. Nothing lands a "$40M beverage brand that just got into Kroger" anywhere specific.</p>
+            <div class="fix"><div class="l">fix</div><div class="t">Don't build 192 pages. Build six: one per segment&#8209;trigger pair that actually closes, each with the case study, the calculator and the one product that solves it. Let search tell you the seventh.</div></div>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head">
+        <span class="pill mod">Plan</span>
+        <h3>First ninety days</h3>
+      </div>
+      <div class="plan">
+        <div class="pcol">
+          <div><div class="d">Days 1&ndash;30</div><div class="n">Instrument, and ship one thing</div></div>
+          <ul>
+            <li><b>Answer the legal question</b> on publishing aggregated deduction data. Everything downstream depends on it.</li>
+            <li><b>Index v1 and calculator live</b>, ungated headline numbers, three retailer pages.</li>
+            <li><b>Event schema wired</b> end to end, one dashboard, no vanity metrics on it.</li>
+            <li><b>Newsletter reformatted</b> &mdash; buyer number up top, changelog at the bottom.</li>
+            <li><b>First 1,200 cold sends</b> into Segments A and B, thresholds written down first.</li>
+            <li><b>Ten customer calls</b> recorded and tagged. All the copy comes from here.</li>
+          </ul>
+          <div class="gate">Gate: <b>the loop ran twice</b> and changed something both times.</div>
+        </div>
+        <div class="pcol">
+          <div><div class="d">Days 31&ndash;60</div><div class="n">Find the channel that pays</div></div>
+          <ul>
+            <li><b>Paid ABM</b> on the winning hook, Segments A and B only.</li>
+            <li><b>Two case&#8209;study campaigns</b> built on the $500K and the 24,500&#8209;store numbers.</li>
+            <li><b>Partner co&#8209;marketing</b> with brokers, 3PLs and the ERPs on your integrations list.</li>
+            <li><b>Six retailer pages</b> plus the first ERP surface pages.</li>
+            <li><b>First kills on the record</b> &mdash; at least one channel and one segment.</li>
+            <li><b>Peer webinar</b> with two customers, aimed at the 2027 plan deadline.</li>
+          </ul>
+          <div class="gate">Gate: <b>cost per Index read under $40</b> in at least two channels.</div>
+        </div>
+        <div class="pcol">
+          <div><div class="d">Days 61&ndash;90</div><div class="n">Compound it</div></div>
+          <ul>
+            <li><b>Expo West locked</b> &mdash; booth meetings pre&#8209;booked from Index readers, not badge scans.</li>
+            <li><b>Segment C test</b> for the foodservice expansion the Series B funds, with a real n this time.</li>
+            <li><b>Index becomes the annual</b> &mdash; next edition's dataset is already filling from the calculator.</li>
+            <li><b>Sales content library</b> from tagged objections; AEs stop writing their own decks.</li>
+            <li><b>Hire or agency decision</b> made on evidence: whichever channel paid gets the next dollar.</li>
+          </ul>
+          <div class="gate">Gate: <b>marketing&#8209;sourced pipeline</b> attributable per segment.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head">
+        <span class="pill mod">Spec</span>
+        <h3>The one page the CEO sees on Monday</h3>
+      </div>
+      <div class="metrics">
+        <div class="mtile"><div class="mn">Qualified conversations created</div><div class="md">weekly, by segment</div><div class="mw">The only top&#8209;of&#8209;funnel number that survives contact with a sales team. A human agreed to talk about their own problem.</div></div>
+        <div class="mtile"><div class="mn">Cost per Index read</div><div class="md">by channel, 7&#8209;day</div><div class="mw">Settles channel arguments in one number, and it's the threshold that kills spend without a meeting.</div></div>
+        <div class="mtile"><div class="mn">Calculator completion rate</div><div class="md">start &rarr; complete</div><div class="mw">Asset health. If it falls, the form got greedy or the traffic got wrong &mdash; both fixable this week.</div></div>
+        <div class="mtile"><div class="mn">Reply rate by segment</div><div class="md">rolling 200 sends</div><div class="mw">Message&#8209;market fit, disaggregated. A blended reply rate hides the one segment that's working.</div></div>
+        <div class="mtile"><div class="mn">Loop cycle time</div><div class="md">signal &rarr; shipped change</div><div class="mw">The health of the system itself. When this creeps past ten days, the loop has become a report.</div></div>
+        <div class="mtile"><div class="mn">Marketing&#8209;sourced pipeline</div><div class="md">by segment, dollars</div><div class="mw">The number the board asks about. Everything above exists to make this one arguable rather than asserted.</div></div>
+      </div>
+      <div class="drops">
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>Four metrics I'd deliberately keep off that page</span></summary>
+          <div class="inner">
+            <div class="nots">
+              <div><b>Impressions and followers</b> &mdash; no decision has ever been made from either.</div>
+              <div><b>Email open rate</b> &mdash; Apple Mail Privacy Protection made it noise. Judging subject lines by it is measuring a proxy that broke.</div>
+              <div><b>MQLs</b> &mdash; a score we invented, which sales is then asked to accept as a promise. Use conversations.</div>
+              <div><b>Blended CAC</b> &mdash; at 60 demos a quarter the denominator is too small to move honestly.</div>
+            </div>
+          </div>
+        </details>
+        <details class="drop">
+          <summary><span class="mk" aria-hidden="true"></span><span>The event schema behind all of it</span></summary>
+          <div class="inner">
+            <div class="tw"><table style="min-width:420px">
+              <thead><tr><th>Event</th><th>Key properties</th><th>Lands in</th></tr></thead>
+              <tbody>
+                <tr><td><code>hook_impression</code></td><td>hook_id, segment, format, spend</td><td>warehouse</td></tr>
+                <tr><td><code>index_view</code></td><td>utm_*, retailer_page, dwell</td><td>warehouse + CRM</td></tr>
+                <tr><td><code>calc_start</code></td><td>session, entry_page</td><td>warehouse</td></tr>
+                <tr><td><code>calc_complete</code></td><td>rev_band, retailers[], disputes_pm, computed_leak</td><td>CRM + Index dataset</td></tr>
+                <tr><td><code>reply_classified</code></td><td>variant_id, objection_tag, sentiment</td><td>CRM</td></tr>
+                <tr><td><code>demo_held</code></td><td>source_hook, first_objection, segment</td><td>CRM</td></tr>
+                <tr><td><code>closed_won</code></td><td>touch_path, days_to_close, acv</td><td>CRM + warehouse</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="blk">
+      <div class="blk-head">
+        <span class="pill asm">Every line an assumption</span>
+        <h3>What I don't know, and where I'd be wrong</h3>
+      </div>
+      <div class="two">
+        <div class="card">
+          <div class="card-t">Six questions for week one</div>
+          <div class="tw"><table style="min-width:0">
+            <tbody>
+              <tr><td class="k" style="width:130px">Legal</td><td>Can aggregated, anonymized deduction data be published? Tab one rests on this.</td></tr>
+              <tr><td class="k">CRM</td><td>HubSpot or Salesforce &mdash; and is the reply&#8209;to&#8209;opportunity path already joined?</td></tr>
+              <tr><td class="k">Baseline</td><td>Site traffic, list size, inbound demo volume. I modeled a funnel without knowing your starting point.</td></tr>
+              <tr><td class="k">Budget</td><td>Paid budget for Q4, and whether events already claim most of it.</td></tr>
+              <tr><td class="k">Ownership</td><td>Who owns SEO and the website today, and what they'd want to keep.</td></tr>
+              <tr><td class="k">Capacity</td><td>Sixty demos a quarter is only a good plan if the team can hold them.</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div class="card">
+          <div class="card-t">Where this is most likely wrong</div>
+          <p class="note"><b>If inbound is already most of your pipeline,</b> the cold&#8209;email lane is the wrong place to spend a new hire's first month. The Index and the site work still hold; I'd shift the 30&#8209;day plan to conversion rather than acquisition.</p>
+          <p class="note"><b>If your buyer is more often a CFO than a controller,</b> LinkedIn weight drops and the webinar and partner channels carry more. The message map changes; the loop doesn't.</p>
+          <p class="note"><b>If the deduction spread turns out narrow,</b> the headline isn't surprising and the Index needs a different lead &mdash; probably recovery rate rather than deduction rate.</p>
+          <p class="note">The part I'd defend hardest is the loop. The campaign is a guess until the first 400 sends come back; the system that turns those replies into a better next 400 is the thing worth hiring for.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p class="sign"><b>Raffey Ahmad</b> &mdash; built before applying, the way I'd expect to work in the role: read everything they publish, find the gap, design the system, label what I don't know. Happy to walk through the parts I'd cut.</p>
+      <div class="srcs">
+        <span>Sources</span>
+        <a href="https://www.confidotech.com/blogs/confido-raises-55m-series-b-to-scale-the-ai-operating-system-for-cpg-brands">Series B announcement</a>
+        <a href="https://www.axios.com/pro/enterprise-software-deals/2026/09/22/confido-cpg-automation-backoffice-insight">Axios Pro, Sep 22 2026</a>
+        <a href="https://www.confidotech.com/blog">The Confido Aisle</a>
+        <a href="https://confido.beehiiv.com/">New on the Shelf</a>
+        <a href="https://www.confidotech.com/case-studies">Case studies</a>
+        <a href="https://www.confidotech.com/integrations">Integrations</a>
+        <a href="https://www.confidotech.com/">Homepage &amp; brand tokens</a>
+      </div>
+    </footer>
+  </section>
+</div>
+
+<script>
+(function(){
+  var PANELS = ['p-campaign','p-loop','p-build'];
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('#tabbar .tab'));
+  var bar  = document.getElementById('tabbar');
+
+  function show(target, scroll){
+    PANELS.forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) el.hidden = (id !== target);
+    });
+    tabs.forEach(function(t){
+      t.setAttribute('aria-selected', t.getAttribute('data-target') === target ? 'true' : 'false');
+    });
+    try { localStorage.setItem('confido-tab', target); } catch(e){}
+    if (scroll && bar) {
+      var y = bar.getBoundingClientRect().top + window.pageYOffset - 8;
+      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+    }
+  }
+
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){ show(t.getAttribute('data-target'), true); });
+    t.addEventListener('keydown', function(e){
+      var i = tabs.indexOf(t);
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        n.focus(); show(n.getAttribute('data-target'), true);
+      }
+    });
+  });
+
+  try {
+    var saved = localStorage.getItem('confido-tab');
+    if (saved && PANELS.indexOf(saved) > -1 && saved !== 'p-campaign') show(saved, false);
+  } catch(e){}
+
+  // ---- calculator ----
+  // Placeholder rates. The real ones come from Confido's own first data pull.
+  var INVALID_SHARE = 0.33;
+  var PER_DISPUTE   = 800;
+  var rev = document.getElementById('calc-rev');
+  var mix = document.getElementById('calc-mix');
+  var dis = document.getElementById('calc-disputes');
+  var oLeak = document.getElementById('out-leak');
+  var oInv  = document.getElementById('out-invalid');
+  var oRec  = document.getElementById('out-recover');
+  var oGap  = document.getElementById('out-gap');
+
+  function money(n){
+    if (n >= 1e6) return '$' + (n/1e6).toFixed(2).replace(/\.?0+$/,'') + 'M';
+    if (n >= 1e3) return '$' + Math.round(n/1e3) + 'K';
+    return '$' + Math.round(n);
+  }
+  function calc(){
+    if (!rev || !mix || !dis) return;
+    var m = Math.max(0, Math.min(2000, parseFloat(rev.value) || 0)) * 1e6;
+    var rate = parseFloat(mix.value) / 100;
+    var d = Math.max(0, Math.min(2000, parseFloat(dis.value) || 0));
+    var leak = m * rate;
+    var invalid = leak * INVALID_SHARE;
+    var recovered = Math.min(invalid, d * 12 * PER_DISPUTE);
+    var gap = Math.max(0, invalid - recovered);
+    oLeak.textContent = money(leak);
+    oInv.textContent  = money(invalid);
+    oRec.textContent  = money(recovered);
+    oGap.innerHTML = gap <= 0
+      ? 'At this dispute pace you’re recovering essentially all of the invalid charges — which almost never happens by hand. Worth checking what it costs you in hours.'
+      : 'You’re leaving about <b>' + money(gap) + '</b> on the table — not because the charges are valid, but because nobody has time to work them inside the retailer’s dispute window.';
+  }
+  [rev, mix, dis].forEach(function(el){
+    if (!el) return;
+    el.addEventListener('input', calc);
+    el.addEventListener('change', calc);
+  });
+  calc();
+})();
+</script>
+
+</body>
+</html>
